@@ -10,33 +10,123 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedConexoesRouteImport } from './routes/_authenticated/conexoes'
+import { Route as AuthenticatedRadarRouteImport } from './routes/_authenticated/radar'
+import { Route as ApiPublicJobsDispatchQueueRouteImport } from './routes/api/public/jobs/dispatch-queue'
+import { Route as ApiPublicRIdRouteImport } from './routes/api/public/r/$id'
+import { Route as ApiPublicWebhooksWhatsappTokenRouteImport } from './routes/api/public/webhooks/whatsapp.$token'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedConexoesRoute = AuthenticatedConexoesRouteImport.update({
+  id: '/conexoes',
+  path: '/conexoes',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedRadarRoute = AuthenticatedRadarRouteImport.update({
+  id: '/radar',
+  path: '/radar',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const ApiPublicJobsDispatchQueueRoute =
+  ApiPublicJobsDispatchQueueRouteImport.update({
+    id: '/api/public/jobs/dispatch-queue',
+    path: '/api/public/jobs/dispatch-queue',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiPublicRIdRoute = ApiPublicRIdRouteImport.update({
+  id: '/api/public/r/$id',
+  path: '/api/public/r/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicWebhooksWhatsappTokenRoute =
+  ApiPublicWebhooksWhatsappTokenRouteImport.update({
+    id: '/api/public/webhooks/whatsapp/$token',
+    path: '/api/public/webhooks/whatsapp/$token',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/conexoes': typeof AuthenticatedConexoesRoute
+  '/radar': typeof AuthenticatedRadarRoute
+  '/api/public/jobs/dispatch-queue': typeof ApiPublicJobsDispatchQueueRoute
+  '/api/public/r/$id': typeof ApiPublicRIdRoute
+  '/api/public/webhooks/whatsapp/$token': typeof ApiPublicWebhooksWhatsappTokenRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/conexoes': typeof AuthenticatedConexoesRoute
+  '/radar': typeof AuthenticatedRadarRoute
+  '/api/public/jobs/dispatch-queue': typeof ApiPublicJobsDispatchQueueRoute
+  '/api/public/r/$id': typeof ApiPublicRIdRoute
+  '/api/public/webhooks/whatsapp/$token': typeof ApiPublicWebhooksWhatsappTokenRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/_authenticated/conexoes': typeof AuthenticatedConexoesRoute
+  '/_authenticated/radar': typeof AuthenticatedRadarRoute
+  '/api/public/jobs/dispatch-queue': typeof ApiPublicJobsDispatchQueueRoute
+  '/api/public/r/$id': typeof ApiPublicRIdRoute
+  '/api/public/webhooks/whatsapp/$token': typeof ApiPublicWebhooksWhatsappTokenRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/conexoes'
+    | '/radar'
+    | '/api/public/jobs/dispatch-queue'
+    | '/api/public/r/$id'
+    | '/api/public/webhooks/whatsapp/$token'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/conexoes'
+    | '/radar'
+    | '/api/public/jobs/dispatch-queue'
+    | '/api/public/r/$id'
+    | '/api/public/webhooks/whatsapp/$token'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/_authenticated/conexoes'
+    | '/_authenticated/radar'
+    | '/api/public/jobs/dispatch-queue'
+    | '/api/public/r/$id'
+    | '/api/public/webhooks/whatsapp/$token'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ApiPublicJobsDispatchQueueRoute: typeof ApiPublicJobsDispatchQueueRoute
+  ApiPublicRIdRoute: typeof ApiPublicRIdRoute
+  ApiPublicWebhooksWhatsappTokenRoute: typeof ApiPublicWebhooksWhatsappTokenRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +138,78 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/conexoes': {
+      id: '/_authenticated/conexoes'
+      path: '/conexoes'
+      fullPath: '/conexoes'
+      preLoaderRoute: typeof AuthenticatedConexoesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/radar': {
+      id: '/_authenticated/radar'
+      path: '/radar'
+      fullPath: '/radar'
+      preLoaderRoute: typeof AuthenticatedRadarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/api/public/jobs/dispatch-queue': {
+      id: '/api/public/jobs/dispatch-queue'
+      path: '/api/public/jobs/dispatch-queue'
+      fullPath: '/api/public/jobs/dispatch-queue'
+      preLoaderRoute: typeof ApiPublicJobsDispatchQueueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/r/$id': {
+      id: '/api/public/r/$id'
+      path: '/api/public/r/$id'
+      fullPath: '/api/public/r/$id'
+      preLoaderRoute: typeof ApiPublicRIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/webhooks/whatsapp/$token': {
+      id: '/api/public/webhooks/whatsapp/$token'
+      path: '/api/public/webhooks/whatsapp/$token'
+      fullPath: '/api/public/webhooks/whatsapp/$token'
+      preLoaderRoute: typeof ApiPublicWebhooksWhatsappTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedConexoesRoute: typeof AuthenticatedConexoesRoute
+  AuthenticatedRadarRoute: typeof AuthenticatedRadarRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedConexoesRoute: AuthenticatedConexoesRoute,
+  AuthenticatedRadarRoute: AuthenticatedRadarRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ApiPublicJobsDispatchQueueRoute: ApiPublicJobsDispatchQueueRoute,
+  ApiPublicRIdRoute: ApiPublicRIdRoute,
+  ApiPublicWebhooksWhatsappTokenRoute: ApiPublicWebhooksWhatsappTokenRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
